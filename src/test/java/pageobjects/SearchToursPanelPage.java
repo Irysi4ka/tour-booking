@@ -21,15 +21,15 @@ public class SearchToursPanelPage extends AbstractPage {
     private WebElement buttonCityTo;
     @FindBy(xpath = "//div[@class='search-panel_calendar']")
     private WebElement inputCalendar;
-    @FindBy(xpath = "//div[@class='selectricWrapper selectricOpen']")
+    @FindBy(xpath = "(//div[@class='persons-dropdown_option'])[1]")
     private WebElement buttonNightsFrom;
-    @FindBy(xpath = "(//div[@class='selectricWrapper'])[2]")
+    @FindBy(xpath = "(//div[@class='selectric'])[2]")
     private WebElement buttonNightsTo;
-    @FindBy(xpath = "//div[@class='search-panel_field-select search-panel_dropdown __opened']")
+    @FindBy(xpath = "(//div[@class='search-panel_field-content'])[4]")
     private WebElement buttonNumberOfPeople;
     @FindBy(xpath = "(//div[@class='selectricWrapper'])[3]")
     private WebElement buttonNumberOfAdults;
-    @FindBy(xpath = "(//div[@class='selectricWrapper'])[4]")
+    @FindBy(xpath = "(//div[@class='selectric'])[4]")
     private WebElement buttonNumberOfChildren;
     @FindBy(xpath = "//input[@class='input-1']")
     private WebElement inputFirstChildAge;
@@ -41,9 +41,6 @@ public class SearchToursPanelPage extends AbstractPage {
     private WebElement buttonSearchTours;
     private String resultCityTo = "//a[@class='available_flights_list_country']";
     private String resultFirstMonth = "(//div[@class='datepick-month-header'])[1]";
-    private String resultFirstDate = "(//table[@class='datepick-month-table']//tbody)[1]";
-    private String resultSecondMonth = "(//div[@class='datepick-month-header'])[2]";
-    private String resultSecondDate = "(//table[@class='datepick-month-table']//tbody)[2]";
     private String dateFour = "//a[@class='dp1654333200000   datepick-weekend']";
 
     public SearchToursPanelPage fillFormTours(String cityTo, String departDate, String a) {
@@ -74,7 +71,7 @@ public class SearchToursPanelPage extends AbstractPage {
         int count = driver.findElements(By.xpath(dateFour)).size();
         for (int i = 0; i < count; i++) {
             String text = driver.findElement(By.xpath(dateFour)).getText();
-            if(text.equalsIgnoreCase("4")){
+            if (text.equalsIgnoreCase("4")) {
                 driver.findElement(By.xpath(dateFour)).click();
                 driver.findElement(By.xpath("//a[@class='datepick-cmd datepick-cmd-close ']")).click();
                 logger.info(text);
@@ -83,5 +80,39 @@ public class SearchToursPanelPage extends AbstractPage {
         return this;
     }
 
+    public SearchToursPanelPage selectNightsFrom() {
+        buttonNightsFrom.click();
+        String dateNightFromWith11 = driver.findElement(By.xpath("//div[@class='selectricItems']//li[11]")).getText();
+        driver.findElement(By.xpath("//div[@class='selectricItems']//li[11]")).click();
+        logger.info(dateNightFromWith11);
+        return this;
+    }
+
+    public SearchToursPanelPage selectNightsTo() {
+        buttonNightsTo.click();
+        String dateNightToWith11 = driver.findElement(By.xpath("(//div[@class='selectricItems']//li[1])[2]")).getText();
+        driver.findElement(By.xpath("(//div[@class='selectricItems']//li[1])[2]")).click();
+        logger.info(dateNightToWith11);
+        return this;
+    }
+
+    public SearchToursPanelPage selectNumberOfPeople(){
+        buttonNumberOfPeople.click();
+        buttonNumberOfAdults.click();
+        driver.findElement(By.xpath("(//div[@class='search-panel_dropdown-menu']//div[@class='selectricItems']//li[2])[1]")).click();
+        buttonNumberOfChildren.click();
+        driver.findElement(By.xpath("(//div[@class='search-panel_dropdown-menu']//div[@class='selectricItems']//li[3])[2]")).click();
+        driver.findElement(By.xpath("(//div[@class='persons-dropdown_row']//input[@class='input-1 accError'])[1]")).clear();
+        driver.findElement(By.xpath("(//div[@class='persons-dropdown_row']//input[@class='input-1 accError'])[1]")).sendKeys("6");
+        driver.findElement(By.xpath("(//div[@class='persons-dropdown_row']//input[@class='input-1 accError'])[1]")).clear();
+        driver.findElement(By.xpath("(//div[@class='persons-dropdown_row']//input[@class='input-1 accError'])[1]")).sendKeys("8");
+        driver.findElement(By.xpath("//div[@class='persons-dropdown_action']//button[@class='btn btn-1 persons-dropdown_btn __orange']")).click();
+        return this;
+    }
+
+    public SearchToursPanelPage clickButtonSearchTours(){
+        buttonSearchTours.click();
+        return this;
+    }
 
 }

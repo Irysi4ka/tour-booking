@@ -7,16 +7,19 @@ import pageobjects.SearchToursPanelPage;
 public class CoralTest extends AbstractTest {
 
     private String cityTo = "Египет";
-    //private String departDate = "04.06";
 
     @Test
-    public void testTourSearch() {
+    public void testTourSearch() throws InterruptedException {
         BasePage basePage = new BasePage(driver)
                 .openPage();
 
         SearchToursPanelPage searchToursPanelPage = new SearchToursPanelPage(driver)
                 .selectCityTo(cityTo)
-                .selectDateFrom();
+                .selectDateFrom()
+                .selectNightsFrom()
+                .selectNightsTo()
+                .selectNumberOfPeople();
 
+        Thread.sleep(5000);
     }
 }
