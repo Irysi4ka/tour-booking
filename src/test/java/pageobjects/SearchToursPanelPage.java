@@ -42,6 +42,8 @@ public class SearchToursPanelPage extends AbstractPage {
     private String resultCityTo = "//a[@class='available_flights_list_country']";
     private String resultFirstMonth = "(//div[@class='datepick-month-header'])[1]";
     private String dateFour = "//a[@class='dp1654333200000   datepick-weekend']";
+    @FindBy(xpath = "//div[@class='datepick-month first']//td")
+    private WebElement dayOfMonthFirst;
 
     public SearchToursPanelPage fillFormTours(String cityTo, String departDate, String a) {
         inputCityTo.sendKeys(cityTo);
@@ -63,8 +65,21 @@ public class SearchToursPanelPage extends AbstractPage {
         return this;
     }
 
-    public SearchToursPanelPage selectDateFrom() {
+    public SearchToursPanelPage selectDateFrom() throws InterruptedException {
         inputCalendar.click();
+        String dateFirst = "15";
+        while (!driver.findElement(By.xpath(resultFirstMonth)).getText().contains("Июнь")) {
+            driver.findElement(By.xpath("//a[@class='datepick-cmd datepick-cmd-next ']")).click();
+        }
+        List<WebElement> elements = driver.findElements(By.xpath("//div[@class='datepick-month first']//td"));
+        for (WebElement element : elements) {
+            if (element.getText().equals(dateFirst)) {
+                element.click();
+                break;
+            }
+        }
+        Thread.sleep(8000);
+        /*
         while (!driver.findElement(By.xpath(resultFirstMonth)).getText().contains("Июнь")) {
             driver.findElement(By.xpath("//a[@class='datepick-cmd datepick-cmd-next ']")).click();
         }
@@ -76,7 +91,7 @@ public class SearchToursPanelPage extends AbstractPage {
                 driver.findElement(By.xpath("//a[@class='datepick-cmd datepick-cmd-close ']")).click();
                 logger.info(text);
             }
-        }
+        }*/
         return this;
     }
 
@@ -96,7 +111,7 @@ public class SearchToursPanelPage extends AbstractPage {
         return this;
     }
 
-    public SearchToursPanelPage selectNumberOfPeople(){
+    public SearchToursPanelPage selectNumberOfPeople() {
         buttonNumberOfPeople.click();
         buttonNumberOfAdults.click();
         driver.findElement(By.xpath("(//div[@class='search-panel_dropdown-menu']//div[@class='selectricItems']//li[2])[1]")).click();
@@ -110,7 +125,7 @@ public class SearchToursPanelPage extends AbstractPage {
         return this;
     }
 
-    public SearchToursPanelPage clickButtonSearchTours(){
+    public SearchToursPanelPage clickButtonSearchTours() {
         buttonSearchTours.click();
         return this;
     }
