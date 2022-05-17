@@ -18,8 +18,9 @@ public class CoralTest extends AbstractTest {
                 .selectDateFrom()
                 .selectNightsFrom()
                 .selectNightsTo()
-                .selectNumberOfPeople();
+                .selectNumberOfPeople()
+                .clickButtonSearchTours();
 
-        Thread.sleep(5000);
+        Thread.sleep(20000);
     }
 }
